@@ -1,0 +1,16 @@
+.map-wrap {
+    flex: 2;
+    position: relative;
+  }
+  
+  .map {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+  /* Mobile layout (for phones) */
+  @media (max-width: 600px) {
+    .map-wrap {
+        flex: 1.5;
+      }
+  }
