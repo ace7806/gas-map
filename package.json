@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://ace7806.github.io/gas/",
+  "homepage": "https://ace7806.github.io/gas-map/",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
