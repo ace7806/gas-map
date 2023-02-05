@@ -14,6 +14,10 @@ export default function Modal() {
                     </p>
 
                     <p className="py-4">
+                        click the upper right button and accept location permision to see where you are in the map
+                    </p>
+
+                    <p className="py-4">
                         When you click a gas station in the menu, the map will zoom into it.
                     </p>
                     <p className="py-4">
