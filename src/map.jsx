@@ -1,4 +1,5 @@
-import React, { useRef, useEffect, useState, useMemo } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
+import config from '../config';
 import maplibregl from 'maplibre-gl';
 import globalEventEmitter from './eventEmitter';
 import { add_circle, add_gasStations } from './utils';
@@ -12,16 +13,29 @@ export default function Map({ bestGasStations, otherGasStations, getGasStations 
   const [lng, setLng] = useState(-66.5);
   const [lat, setLat] = useState(18.33);
   const [zoom, setZoom] = useState(9);
-  const [API_KEY] = useState('get_your_own_OpIi9ZULNHzrESv6T2vL');
-  const SEARCH_RADIUS = 4
+  const NORMAL_RAD = 6;
+  const SUPER_RAD = 12;
+  const [rad,setRad] = useState(NORMAL_RAD)
 
-
-
+  // moves the map towards the gas station that the user clicked 
   useEffect(() => {
     if (!map.current) return
     map.current.flyTo({ center: [lng, lat], zoom: zoom });
   }, [lng, lat])
 
+  // update click listener every time super sized search is toggled
+  useEffect(() => {
+    if (!map.current) return
+    // query gas stations every time a user clicks on the map
+    map.current.on('click', function (e) {
+      const [long, latitude] = e.lngLat.toArray()
+      console.log(long, latitude);
+      getGasStations(long, latitude, rad)
+      add_circle(map.current, long, latitude, rad)
+    });
+  }, [rad])
+    
+  // add's gas stations to map data source
   useEffect(() => {
     if (!map.current || !bestGasStations || !otherGasStations) return
     add_gasStations(map.current, bestGasStations, true)
@@ -30,25 +44,24 @@ export default function Map({ bestGasStations, otherGasStations, getGasStations 
 
   useEffect(() => {
     if (map.current) return;
-    globalEventEmitter.on('view-station-event', (data) => {
-      console.log(data);
-      setLng(data.lng)
-      setLat(data.lat)
-    });
-
+    // initialize map
     map.current = new maplibregl.Map({
       container: mapContainer.current,
-      style: `https://api.maptiler.com/maps/streets-v2/style.json?key=${API_KEY}`,
+      style: `https://api.maptiler.com/maps/streets-v2/style.json?key=${config.mapTilerKey}`,
       center: [-65.15, 17],
       zoom: 4,
       maxBounds: [[-70.3503, 16.8637], [-63.27647, 19.49178]]
     });
 
-    map.current.on('click', function (e) {
-      const [lng, lat] = e.lngLat.toArray()
-      console.log(lng, lat);
-      getGasStations(lng, lat, SEARCH_RADIUS)
-      add_circle(map.current, lng, lat, SEARCH_RADIUS)
+    // listen to new coords to move to. 
+    globalEventEmitter.on('view_station_event', (data) => {
+      console.log(data);
+      setLng(data.lng)
+      setLat(data.lat)
+    });
+    // listen to super search checkbox event and update radius accordingly 
+    globalEventEmitter.on('super_size_search_toggle_event', (data) => {
+      setRad(data.checked? SUPER_RAD:NORMAL_RAD)
     });
 
     // Add geolocate control to the map.
@@ -64,12 +77,12 @@ export default function Map({ bestGasStations, otherGasStations, getGasStations 
     setZoom(17)
   }, []);
 
-
-
-
   return (
     <div className="map-wrap">
       <div ref={mapContainer} className="map" />
+      <div className='absolute top-1 left-1 text-xs opacity-50 '>
+        PR gas map by Sebastian
+      </div>
     </div>
   );
 }

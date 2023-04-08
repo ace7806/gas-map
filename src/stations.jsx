@@ -6,7 +6,7 @@ export default function Station({ highlight, gasStation }) {
   const { name, price } = gasStation.properties
   const [lng, lat] = gasStation.geometry.coordinates
   const handleClick = () => {
-    globalEventEmitter.emit('view-station-event', { lng: lng, lat: lat });
+    globalEventEmitter.emit('view_station_event', { lng: lng, lat: lat });
   };
   return (
     <button onClick={handleClick} className='btn btn-block btn-ghost text-base flex justify-end my-4 '>
