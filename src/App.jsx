@@ -25,10 +25,10 @@ function App() {
     <div className="container">
       
       <div className="flex-1 overflow-auto ">
-        <div className="form-control bg-slate-500" >
+        <div className="form-control m-5 bg-neutral-100" >
           <label className="label cursor-pointer">
             <span className="">super size search</span> 
-            <input type="checkbox" onChange={()=>{globalEventEmitter.emit('super_size_search_toggle_event',{checked:  event.target.checked})}} className="checkbox checkbox-primary" />
+            <input type="checkbox" onChange={()=>{globalEventEmitter.emit('super_size_search_toggle_event',{checked:  event.target.checked})}} className="checkbox" />
           </label>
           </div>
         <div className='flex'>
