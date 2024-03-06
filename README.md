@@ -2,7 +2,8 @@
 
 In Puerto Rico, staying current with technology can be a challenge. Unfortunately, there hasn't been a straightforward way to compare gas prices, leaving consumers wondering if the gas station around the corner is actually cheaper than the one next to their workplace. This project addresses that issue by providing an intuitive platform that enables users to easily identify the most affordable gas stations, enhancing access to cost-saving information.
 
- ![gas map](https://github.com/ace7806/gas-map/assets/60676798/d8978430-5b41-4838-99f1-81c05d3209ab)
+ ![gas map](https://github.com/ace7806/gas-map/assets/60676798/22038982-f3ae-4744-8c52-a1408b7bd7be)
+
 
 [Try for your self](https://ace7806.github.io/gas-map/)
 
